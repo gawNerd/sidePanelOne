@@ -21,11 +21,13 @@
 #include "sp1_button.h"
 #include "sp1_potmeter.h"
 #include "sp1_rgb.h"
+#include "sp1_relay.h"
 
 sp1_switch *swA, *swB, *swC;
 sp1_button *btA, *btB, *btC;
 sp1_potmeter *pmA, *pmB, *pmC;
 sp1_rgb *RGB;
+sp1_relay *rel;
 
 
 /* ---------------------------------------------------------- *
@@ -46,6 +48,8 @@ void setup()
     pmC = new sp1_potmeter(A2);
 
     RGB = new sp1_rgb(7, 8, 9);
+
+    rel = new sp1_relay(5);
 
     Serial.begin(9600);
 }
@@ -99,6 +103,17 @@ void loop()
 
     Serial.print("\tsetting RGB ");
     RGB->setColor((pA/4), (pB/4), (pC/4));
+
+
+    Serial.print("\tset relay when pC > 511 ");
+    if (pC > 511)
+    {
+      rel->setRelay();
+    }
+    else
+    {
+      rel->clearRelay();
+    }
 
     Serial.print("\n");
     delay(500);
