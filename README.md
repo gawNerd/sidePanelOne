@@ -27,6 +27,8 @@ The SP1 offers a relay (an electrically operable switch). This relay has a LED b
 
 [Readme file](./README.md)
 
+[sp1_test.ino file](./sp1_test/sp1_test.ino)
+
 [Roadmap or TODO file](./TODO.md)
 
 [License file](./LICENSE)
