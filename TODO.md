@@ -4,6 +4,7 @@
 
 ##### Code the **sp1_rotary** library
 - 20180219 - new action
+- 20180219 - partly coded, needs ISR
 
 ## Things done
 

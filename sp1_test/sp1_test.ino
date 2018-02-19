@@ -22,12 +22,14 @@
 #include "sp1_potmeter.h"
 #include "sp1_rgb.h"
 #include "sp1_relay.h"
+#include "sp1_rotary.h"
 
 sp1_switch *swA, *swB, *swC;
 sp1_button *btA, *btB, *btC;
 sp1_potmeter *pmA, *pmB, *pmC;
 sp1_rgb *RGB;
 sp1_relay *rel;
+sp1_rotary *rot;
 
 
 /* ---------------------------------------------------------- *
@@ -50,6 +52,8 @@ void setup()
     RGB = new sp1_rgb(7, 8, 9);
 
     rel = new sp1_relay(5);
+
+    rot = new sp1_rotary(A3, A4, A5);
 
     Serial.begin(9600);
 }
@@ -101,6 +105,14 @@ void loop()
     Serial.print(pC);
     Serial.print(" ");
 
+    Serial.print("\tRotary value: ");
+    val = rot->readRotary();
+    Serial.print(val);
+
+    Serial.print("\tRotary push: ");
+    val = rot->readPush();
+    Serial.print(val);
+
     Serial.print("\tsetting RGB ");
     RGB->setColor((pA/4), (pB/4), (pC/4));
 
@@ -116,5 +128,5 @@ void loop()
     }
 
     Serial.print("\n");
-    delay(500);
+//     delay(500);
 }
