@@ -20,9 +20,11 @@
 #include "Arduino.h"
 #include "sp1_switch.h"
 #include "sp1_button.h"
+#include "sp1_potmeter.h"
 
 sp1_switch *swA, *swB, *swC;
 sp1_button *btA, *btB, *btC;
+sp1_potmeter *pmA, *pmB, *pmC;
 
 
 /* ---------------------------------------------------------- *
@@ -37,6 +39,10 @@ void setup()
     btA = new sp1_button(2);
     btB = new sp1_button(3);
     btC = new sp1_button(4);
+
+    pmA = new sp1_potmeter(A0);
+    pmB = new sp1_potmeter(A1);
+    pmC = new sp1_potmeter(A2);
 
     Serial.begin(9600);
 }
@@ -72,6 +78,21 @@ void loop()
 
     val = btC->readButton();
     Serial.print(val);
+
+    
+    Serial.print("\tPM's: ");
+
+    val = pmA->readPotmeter();
+    Serial.print(val);
+    Serial.print(", ");
+
+    val = pmB->readPotmeter();
+    Serial.print(val);
+    Serial.print(", ");
+
+    val = pmC->readPotmeter();
+    Serial.print(val);
+    Serial.print(" ");
 
     Serial.print("\n");
     delay(500);
