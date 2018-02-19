@@ -10,8 +10,7 @@
  * ------------------------------------------------------------------------- *
  *
  * Usage of this library is at the user's own risk, author will not be held
- * responsible for any damage to your hardware. Especially the positioning
- * of servo's has to be done with the greatest possible care.
+ * responsible for any damage to your hardware.
  *
  * ------------------------------------------------------------------------- *
  *        Copyright (C) 2018 Gerard Wassink

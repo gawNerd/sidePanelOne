@@ -1,8 +1,8 @@
 /* ------------------------------------------------------------------------- *
- * Name   : sp1_switch.cpp
+ * Name   : sp1_rgb.cpp
  * Author : Gerard Wassink
  * Date   : February 2018
- * Purpose: Switch actions for the Side Panel 1 by Totem
+ * Purpose: Set values for the RGD LED in the Side Panel 1 by Totem
  * ------------------------------------------------------------------------- *
  *
  * ------------------------------------------------------------------------- *
@@ -18,28 +18,28 @@
 
 #include "Arduino.h"
 
-#include "sp1_switch.h"
+#include "sp1_rgb.h"
 
 /* ------------------------------------------------------------------------- *
     Constructor for this class
  * ------------------------------------------------------------------------- */
-sp1_switch::sp1_switch(int sw)
+sp1_rgb::sp1_rgb(int R, int G, int B)
 {
-    pinMode(sw, INPUT_PULLUP);          // make sure unconnected = high
+    pinMode(R, OUTPUT);
 
-    _sw = sw;                           // initialize privates
-    _prev_value = -1;
-    _value = -1;
+    _R = R;                             // initialize privates
+    _G = G;
+    _B = B;
 }
 
 
 
 /* ------------------------------------------------------------------------- *
-    Read a switch from Side Panel 1
+    Set colors and intensities for the rgb from Side Panel 1
  * ------------------------------------------------------------------------- */
-int sp1_switch::readSwitch()
+void sp1_rgb::setColor(int Rvalue, int Gvalue, int Bvalue)
 {
-    _prev_value = _value;               // Store previous value (future use?)
-    _value = digitalRead(_sw);          // read current value
-    return(_value);                     //   and return it
+    analogWrite(_R, 0xFF - Rvalue);     // Set R value value
+    analogWrite(_G, 0xFF - Gvalue);     // Set G value value
+    analogWrite(_B, 0xFF - Bvalue);     // Set B value value
 }

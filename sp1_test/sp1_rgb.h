@@ -1,8 +1,8 @@
 /* ------------------------------------------------------------------------- *
- * Name   : sp1_switch.h
+ * Name   : sp1_rgb.h
  * Author : Gerard Wassink
  * Date   : February 2018
- * Purpose: Switch actions for the Side Panel 1 by Totem
+ * Purpose: Set values for the RGD LED in the Side Panel 1 by Totem
  * ------------------------------------------------------------------------- *
  *
  * ------------------------------------------------------------------------- *
@@ -16,22 +16,20 @@
  *        Copyright (C) 2018 Gerard Wassink
  * ------------------------------------------------------------------------- */
 
-#ifndef sp1_switch_h
-#define sp1_switch_h
+#ifndef sp1_rgb_h
+#define sp1_rgb_h
 
 #include "Arduino.h"
 
-class sp1_switch
+class sp1_rgb
 {
 
   public:
-    sp1_switch(int sw);
-    int readSwitch();
+    sp1_rgb(int R, int G, int B);
+    void setColor(int Rvalue, int Gvalue, int Bvalue);
 
   private:
-    int _sw;
-    int _prev_value;
-    int _value;
+    int _R, _G, _B;
 
 };
 

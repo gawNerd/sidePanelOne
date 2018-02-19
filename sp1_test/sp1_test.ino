@@ -10,8 +10,7 @@
  * ------------------------------------------------------------------------- *
  *
  * Usage of this library is at the user's own risk, author will not be held
- * responsible for any damage to your hardware. Especially the positioning
- * of servo's has to be done with the greatest possible care.
+ * responsible for any damage to your hardware.
  *
  * ------------------------------------------------------------------------- *
  *        Copyright (C) 2018 Gerard Wassink
@@ -21,10 +20,12 @@
 #include "sp1_switch.h"
 #include "sp1_button.h"
 #include "sp1_potmeter.h"
+#include "sp1_rgb.h"
 
 sp1_switch *swA, *swB, *swC;
 sp1_button *btA, *btB, *btC;
 sp1_potmeter *pmA, *pmB, *pmC;
+sp1_rgb *RGB;
 
 
 /* ---------------------------------------------------------- *
@@ -43,6 +44,8 @@ void setup()
     pmA = new sp1_potmeter(A0);
     pmB = new sp1_potmeter(A1);
     pmC = new sp1_potmeter(A2);
+
+    RGB = new sp1_rgb(7, 8, 9);
 
     Serial.begin(9600);
 }
@@ -82,17 +85,20 @@ void loop()
     
     Serial.print("\tPM's: ");
 
-    val = pmA->readPotmeter();
-    Serial.print(val);
+    int pA = pmA->readPotmeter();
+    Serial.print(pA);
     Serial.print(", ");
 
-    val = pmB->readPotmeter();
-    Serial.print(val);
+    int pB = pmB->readPotmeter();
+    Serial.print(pB);
     Serial.print(", ");
 
-    val = pmC->readPotmeter();
-    Serial.print(val);
+    int pC = pmC->readPotmeter();
+    Serial.print(pC);
     Serial.print(" ");
+
+    Serial.print("\tsetting RGB ");
+    RGB->setColor((pA/4), (pB/4), (pC/4));
 
     Serial.print("\n");
     delay(500);

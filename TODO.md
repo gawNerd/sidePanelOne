@@ -5,9 +5,6 @@
 ##### Code the **sp1_rotary** library
 20180219 - new action
 
-##### Code the **sp1_rgb** library
-20180219 - new action
-
 ##### Code the **sp1_relay** library
 20180219 - new action
 
@@ -24,6 +21,11 @@
 20180219 - DONE
 
 ##### Code the **sp1_potmeter** library
+20180219 - new action
+
+20180219 - DONE
+
+##### Code the **sp1_rgb** library
 20180219 - new action
 
 20180219 - DONE
