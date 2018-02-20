@@ -26,13 +26,14 @@ class sp1_rotary
 
   public:
     sp1_rotary(int encA, int encB, int encP);
-    int readRotary();
-    int readPush();
+    void readRotary();
+    int Rvalue;
+    int Pvalue;
 
   private:
     int _encA, _encB, _encP;
     int _prev_value;
-    int _value;
+    int _cur_value;
 
 };
 

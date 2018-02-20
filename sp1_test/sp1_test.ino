@@ -31,6 +31,9 @@ sp1_rgb *RGB;
 sp1_relay *rel;
 sp1_rotary *rot;
 
+unsigned long now = millis();         // Keep track
+unsigned long prv = millis();         //   of time
+long wait_time = 500;                 // displays every 1/2 second
 
 /* ---------------------------------------------------------- *
     Setup runs once
@@ -65,60 +68,27 @@ void setup()
  * ---------------------------------------------------------- */
 void loop()
 {
-    int val = 0;
+    int val_swA, val_swB,val_swC;
+    int val_btA, val_btB, val_btC;
+    int val_pmA, val_pmB, val_pmC;
+
+    val_swA = swA->readSwitch();
+    val_swB = swB->readSwitch();
+    val_swC = swC->readSwitch();
+
+    val_btA = btA->readButton();
+    val_btB = btB->readButton();
+    val_btC = btC->readButton();
     
-    Serial.print("SW's: ");
+    val_pmA = pmA->readPotmeter();
+    val_pmB = pmB->readPotmeter();
+    val_pmC = pmC->readPotmeter();
 
-    val = swA->readSwitch();
-    Serial.print(val);
+    rot->readRotary();
 
-    val = swB->readSwitch();
-    Serial.print(val);
+    RGB->setColor((val_pmA/4), (val_pmB/4), (val_pmC/4));
 
-    val = swC->readSwitch();
-    Serial.print(val);
-
-    
-    Serial.print("\tBT's: ");
-
-    val = btA->readButton();
-    Serial.print(val);
-
-    val = btB->readButton();
-    Serial.print(val);
-
-    val = btC->readButton();
-    Serial.print(val);
-
-    
-    Serial.print("\tPM's: ");
-
-    int pA = pmA->readPotmeter();
-    Serial.print(pA);
-    Serial.print(", ");
-
-    int pB = pmB->readPotmeter();
-    Serial.print(pB);
-    Serial.print(", ");
-
-    int pC = pmC->readPotmeter();
-    Serial.print(pC);
-    Serial.print(" ");
-
-    Serial.print("\tRotary value: ");
-    val = rot->readRotary();
-    Serial.print(val);
-
-    Serial.print("\tRotary push: ");
-    val = rot->readPush();
-    Serial.print(val);
-
-    Serial.print("\tsetting RGB ");
-    RGB->setColor((pA/4), (pB/4), (pC/4));
-
-
-    Serial.print("\tset relay when pC > 511 ");
-    if (pC > 511)
+    if (val_pmC > 511)
     {
       rel->setRelay();
     }
@@ -127,6 +97,39 @@ void loop()
       rel->clearRelay();
     }
 
-    Serial.print("\n");
+    now = millis();                     // Determine time
+    if ((now - prv) >= wait_time) {     // if time passed
+      Serial.print("SW's: ");
+      Serial.print(val_swA);
+      Serial.print(val_swB);
+      Serial.print(val_swC);
+      
+      Serial.print("\tBT's: ");
+      Serial.print(val_btA);
+      Serial.print(val_btB);
+      Serial.print(val_btC);
+  
+      Serial.print("\tPM's: ");
+      Serial.print(val_pmA);
+      Serial.print(", ");
+      Serial.print(val_pmB);
+      Serial.print(", ");
+      Serial.print(val_pmC);
+      Serial.print(" ");
+  
+      Serial.print("\tRotary value: ");
+      Serial.print(rot->Rvalue);
+      Serial.print("\tRotary push: ");
+      Serial.print(rot->Pvalue);
+  
+      Serial.print("\tRGB set to pm values ");
+      Serial.print("\tset relay when pmC > 511 ");
+  
+      Serial.print("\n");
+
+      prv += wait_time;                 // Save the time
+    } // if
+
+
 //     delay(500);
 }

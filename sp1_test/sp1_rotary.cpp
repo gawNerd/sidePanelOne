@@ -33,44 +33,36 @@ sp1_rotary::sp1_rotary(int encA, int encB, int encP)
     _encB = encB;
     _encP = encP;
     _prev_value = -1;
-    _value = -1;
+    _cur_value = -1;
 }
 
 
 
 /* ------------------------------------------------------------------------- *
-    Read the rotary from Side Panel 1
+    Read the rotary and rotary push button from Side Panel 1
  * ------------------------------------------------------------------------- */
-int sp1_rotary::readRotary()
-{
-    int retValue = 0;
+void sp1_rotary::readRotary()
+{    
+    int A_val = digitalRead(_encA);     // read current rotary Contact A
+    int B_val = digitalRead(_encB);     // read current rotary Contact B
     
-    _prev_value = _value;               // Store previous value (future use?)
+    _cur_value = B_val<<1 | A_val;      // Combine the two values
     
-    int A_val = digitalRead(_encA);     // read current values
-    int B_val = digitalRead(_encB);     // read current values
-    
-    _value = B_val<<1 | A_val;          // Combine the two values
-
     if (_prev_value == 3) {             // previous value 3?
-        if (_value == 1) {              // clockwise?
-          retValue = +10;               // increment
-        } else if (_value == 2) {       // counter-clockwise?
-          retValue = -10;               // decrement
+        if (_cur_value == 1) {          // counter-clockwise?
+          this->Rvalue -= 10;           // increment
+          if (this->Rvalue <0)          // See that
+          {                             //  value
+            this->Rvalue = 0;           //   does not go
+          } // if                       //    below zero
+        } else if (_cur_value == 2) {   // clockwise?
+          this->Rvalue += 10;           // increment
         } // if
     } // if
-    _prev_value = _value;               // save current to previous value
-    
-    return(retValue);                   //   and return it
-}
+    _prev_value = _cur_value;           // save current to previous value
+
+    this->Pvalue = digitalRead(_encP);    // read current push button value
+
+} // readRotary
 
 
-
-/* ------------------------------------------------------------------------- *
-    Read rotary Push button from Side Panel 1
- * ------------------------------------------------------------------------- */
-int sp1_rotary::readPush()
-{
-    int P_val = digitalRead(_encP);     // read current value
-    return(P_val);                      //   and return it
-}
